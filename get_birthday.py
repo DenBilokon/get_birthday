@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import re
 
 
@@ -7,8 +7,9 @@ def dict_for_celebrate(new_birthday_dict, period):
     # Створення словника, в якому позначено коли і кого привітати, починаючи з поточного дня
 
     happy_dict = {}
+
     for n_name, n_dat in new_birthday_dict.items():
-        if 0 <= n_dat.day - datetime.now().day  < period:
+        if 0 <= n_dat.day - datetime.now().day < period:
             happy_dict[n_name] = n_dat
     return happy_dict
 
@@ -16,8 +17,9 @@ def dict_for_celebrate(new_birthday_dict, period):
 def output_birthday(happy_dict):
 
     # Функція виводу днів тижня та іменинників зі словника
-
-    week_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+    week_days = []
+    for i in range(1, 8):
+        week_days.append((datetime.today()+timedelta(days=i)).strftime('%A'))
     celebrate_dict = {}
 
     for d in week_days:
@@ -49,9 +51,9 @@ def when_celebrate(birthday_dict):
         date = re.split("/", dat)
         birth = datetime(year=datetime.now().year, month=int(date[1]), day=int(date[0]))
         if birth.isocalendar()[2] == 7:
-            birth = birth.replace(day = birth.day+1)
+            birth = birth.replace(day=birth.day+1)
         if birth.isocalendar()[2] == 6:
-            birth = birth.replace(day = birth.day+2)
+            birth = birth.replace(day=birth.day+2)
         new_birthday_dict[name] = birth
 
     return new_birthday_dict
@@ -74,7 +76,7 @@ if __name__ == '__main__':
         'Nok': '14/12/1994',
         'Kred': '13/12/1994',
         'Tim': '18/12/1997',
-        'Kooc': '20/12/1997'
+        'Kooc': '09/12/1997'
     }
 
     get_birthday(birthday_dict)
