@@ -42,19 +42,20 @@ def output_birthday(happy_dict):
     return print(st)
 
 
-def when_celebrate(birthday_dict):
+def when_celebrate(birthday_list):
 
-    # Перетворення словника на словник з об'єктами datetime і міняються ДР, які в СБ і НД на др в ПН
+    # Перетворення списку ДН на словник з об'єктами datetime і міняються ДН, які в СБ і НД на др в ПН
 
     new_birthday_dict = {}
-    for name, dat in birthday_dict.items():
-        date = re.split("/", dat)
-        birth = datetime(year=datetime.now().year, month=int(date[1]), day=int(date[0]))
-        if birth.isocalendar()[2] == 7:
-            birth = birth.replace(day=birth.day+1)
-        if birth.isocalendar()[2] == 6:
-            birth = birth.replace(day=birth.day+2)
-        new_birthday_dict[name] = birth
+    for i in birthday_list:
+        for name, dat in i.items():
+            date = re.split("/", dat)
+            birth = datetime(year=datetime.now().year, month=int(date[1]), day=int(date[0]))
+            if birth.isocalendar()[2] == 7:
+                birth = birth.replace(day=birth.day + 1)
+            if birth.isocalendar()[2] == 6:
+                birth = birth.replace(day=birth.day + 2)
+            new_birthday_dict[name] = birth
 
     return new_birthday_dict
 
@@ -67,16 +68,9 @@ def get_birthday(birthdict):
 
 
 if __name__ == '__main__':
-    birthday_dict = {
-        "Yulia": "06/12/1996",
-        'Yarpl': '07/12/1997',
-        'Sunny': '26/12/2000',
-        'Luk': '10/12/1995',
-        'Sim': '12/12/1991',
-        'Nok': '14/12/1994',
-        'Kred': '13/12/1994',
-        'Tim': '18/12/1997',
-        'Kooc': '09/12/1997'
-    }
+    birth_list = [{"Yulia": "06/12/1996"}, {'Yarpl': '07/12/1997'}, {'Sunny': '26/12/2000'},
+                     {'Luk': '10/12/1995'}, {'Sim': '12/12/1991'}, {'Nok': '14/12/1994'},
+                     {'Kred': '13/12/1994'}, {'Tim': '18/12/1997'}, {'Kooc': '09/12/1997'}
+                     ]
 
-    get_birthday(birthday_dict)
+    get_birthday(birth_list)
